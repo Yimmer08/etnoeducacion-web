@@ -1,0 +1,16 @@
+/node_modules
+/.next/
+/out/
+/build
+/coverage
+.DS_Store
+*.pem
+npm-debug.log*
+.env*
+.vercel
+*.tsbuildinfo
+next-env.d.ts
+supabase/.temp/
+
+# El .env.example SÍ va al repo: es la plantilla, no tiene secretos.
+!.env.example

@@ -1,0 +1,38 @@
+# Cuatro pasos, en este orden: check:migrations → lint → test → build.
+# El orden no es casual — los tres primeros tardan segundos y el build cerca de
+# un minuto, así que un error barato se ve rápido.
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run check:migrations
+      - run: npm run lint
+      - run: npm run test
+      - run: npm run build
+        env:
+          # El build no llama a Supabase: los clientes se crean dentro de
+          # funciones, no a nivel de módulo. Estos valores solo evitan que un
+          # `!` de TypeScript truene si alguna página empieza a leerlas al
+          # importar.
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-anon-key

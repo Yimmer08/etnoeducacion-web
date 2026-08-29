@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Paleta — Repositorio de Etnoeducación Afrocolombiana
+
+   Los tonos vienen de la cultura material afro del Pacífico y el Caribe
+   colombiano — el añil de los tintes, el ocre de la tierra, el verde de la
+   palma, el barro de la cerámica.
+
+   ⚠️ Si la fundación tiene manual de marca propio, esta paleta se reemplaza
+   acá y en ningún otro archivo: ningún componente escribe un color a mano.
+   ═══════════════════════════════════════════════════════════════════════════ */
+:root {
+  --crema:        #FAF7F0;
+  --carbon:       #1C1917;
+  --anil:         #1F4462;
+  --ocre:         #B8842B;
+  --tierra:       #8E3B26;
+  --palma:        #3B6B4C;
+
+  /* Derivados — estados y superficies, no son paleta oficial */
+  --crema-dk:     #F0EADD;
+  --borde:        #DDD4C4;
+  --carbon-suave: #57534E;
+  --anil-lt:      #2C5C82;
+  --ocre-lt:      #D6A03F;
+}
+
+@theme inline {
+  --color-crema:        var(--crema);
+  --color-crema-dk:     var(--crema-dk);
+  --color-carbon:       var(--carbon);
+  --color-carbon-suave: var(--carbon-suave);
+  --color-anil:         var(--anil);
+  --color-anil-lt:      var(--anil-lt);
+  --color-ocre:         var(--ocre);
+  --color-ocre-lt:      var(--ocre-lt);
+  --color-tierra:       var(--tierra);
+  --color-palma:        var(--palma);
+  --color-borde:        var(--borde);
+
+  --font-display: var(--font-serif);
+  --font-sans:    var(--font-inter);
+}
+
+/* ─── Base ─────────────────────────────────────────────────────────────────── */
+body {
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display), Georgia, serif;
+}
+
+/* Enfoque visible en todo lo que se puede enfocar con teclado. Sin esto,
+   navegar el repositorio con Tab es imposible — y un archivo educativo
+   público tiene que ser navegable con teclado. */
+:focus-visible {
+  outline: 2px solid var(--anil);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Salto al contenido: invisible hasta que se enfoca con Tab. */
+.salto-contenido {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background: var(--anil);
+  color: white;
+}
+.salto-contenido:focus {
+  left: 0.5rem;
+  top: 0.5rem;
+}
+
+/* ─── Animaciones ──────────────────────────────────────────────────────────
+   Solo `transform` y `opacity`, nada por encima de 1.2s. Animar cualquier
+   otra propiedad obliga al navegador a recalcular el layout en cada cuadro. */
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.aparecer {
+  animation: aparecer 0.4s ease-out both;
+}
+
+/* Quien pidió menos movimiento no ve ninguno. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Utilidades ───────────────────────────────────────────────────────────── */
+.recorte-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.recorte-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
