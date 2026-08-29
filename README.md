@@ -61,7 +61,8 @@ supabase/migrations/002_funciones_rls.sql          es_admin(), es_equipo(), es_m
 supabase/migrations/003_politicas_rls.sql          RLS en todas las tablas
 supabase/migrations/004_busqueda_y_estadisticas.sql  texto completo + contadores
 supabase/migrations/005_storage.sql                bucket privado + sus políticas
-supabase/migrations/006_semilla.sql                9 colecciones, 26 etiquetas
+supabase/migrations/006_semilla.sql                vocabulario inicial, 26 etiquetas
+supabase/migrations/007_colecciones_de_la_fundacion.sql  las 9 colecciones del acervo
 ```
 
 Se pueden pegar en el SQL Editor de Supabase una por una. **En orden**: 003
@@ -100,15 +101,113 @@ npm run dev
 
 ---
 
+## Cargar el acervo de una vez
+
+Subir doscientos PDF por el formulario del panel, de a uno, no es trabajo para
+nadie. `scripts/cargar-documentos.mjs` sube un árbol de carpetas completo: cada
+subcarpeta de primer nivel es una colección y cada archivo dentro de ella —a
+cualquier profundidad— entra como un documento.
+
+### 1. Ordenar las carpetas
+
+Una carpeta por colección, con estos nombres. Se comparan sin tildes y sin
+distinguir mayúsculas, y basta con que empiecen igual, así que
+`CARTILLAS LENGUA PALENKERA 2024` también se reconoce:
+
+| Carpeta                                | Colección                            |
+| -------------------------------------- | ------------------------------------ |
+| `CARTILLA LA AVENTURA ANCESTRAL`       | Cartilla La Aventura Ancestral       |
+| `CARTILLAS LENGUA PALENKERA`           | Cartillas de Lengua Palenkera        |
+| `CATEDRA DE ESTUDIOS AFRO`             | Cátedra de Estudios Afro             |
+| `CUENTOS AFRO DEL PACIFICO COLOMBIANO` | Cuentos Afro del Pacífico Colombiano |
+| `DIASPORA AFRICANA`                    | Diáspora Africana                    |
+| `ETNOEDUCACION`                        | Etnoeducación                        |
+| `MALETA DIDACTICA`                     | Maleta Didáctica                     |
+| `POEMAS`                               | Poemas                               |
+| `SAN BASILIO DE PALENQUE`              | San Basilio de Palenque              |
+
+Lo que no esté en esa lista se informa y se salta, sin subir nada — no hay
+manera de que una carpeta caiga en la colección equivocada por descuido. Para
+sumar una carpeta nueva hay dos pasos: la colección en una migración y su
+nombre en la constante `COLECCIONES` del script. Las carpetas que deja el
+sistema operativo (`LOST.DIR`, `System Volume Information`, las ocultas) se
+saltan solas.
+
+Se aceptan PDF, Word, ODT, EPUB, imágenes, MP3, OGG, WAV y MP4, hasta 50 MB por
+archivo — la misma lista del bucket (`005_storage.sql`). El resto se informa y
+se salta.
+
+### 2. Aplicar la migración 007
+
+Sin ella no existen las colecciones y el script no tiene dónde poner nada. Se
+pega en el SQL Editor de Supabase como las anteriores.
+
+### 3. Ensayar
+
+```bash
+npm run cargar:acervo -- "D:/ACERVO" --dry-run
+```
+
+No sube ni escribe nada: dice qué haría, con qué título y en qué colección
+quedaría cada archivo. **Correrlo siempre antes que la carga de verdad.**
+
+### 4. Cargar
+
+```bash
+npm run cargar:acervo -- "D:/ACERVO"
+```
+
+Necesita `NEXT_PUBLIC_SUPABASE_URL` y `SUPABASE_SERVICE_ROLE_KEY` en
+`.env.local` (las lee de ahí solo). Los documentos entran en **borrador**, a
+nombre del único admin activo; con `--estado=publicado` salen publicados
+directo, sin pasar por la cola de revisión.
+
+Se puede volver a correr cuantas veces haga falta: antes de subir cada archivo
+compara su SHA-256 con lo que ya está cargado, así que si se corta a la mitad
+—se cayó internet, se cerró la consola— se vuelve a lanzar y sigue donde iba,
+sin duplicar nada.
+
+| Opción             | Para qué                                            |
+| ------------------ | --------------------------------------------------- |
+| `--dry-run`        | Ensayo: no sube ni escribe nada.                     |
+| `--estado=<e>`     | `borrador` (por defecto), `en_revision`, `publicado`. |
+| `--licencia=<l>`   | Licencia de todo lo cargado (por defecto `con_permiso`). |
+| `--perfil=<uuid>`  | A quién se le atribuye, si hay más de un admin.      |
+| `--solo=<carpeta>` | Una sola colección.                                  |
+| `--limite=<n>`     | Corta a los n documentos. Para probar con dos o tres. |
+
+### 5. Completar las fichas
+
+El script deja lo que se puede sacar de un nombre de archivo: título, tipo,
+colección y el archivo. **La autoría, el año, el resumen y las etiquetas no las
+puede adivinar** — se completan en el panel, documento por documento, en
+`/panel/documentos`. Es la parte que necesita a alguien que conozca el material,
+y es también la que hace que el buscador sirva: la búsqueda pondera título,
+autoría y resumen, y un documento sin resumen aparece mucho menos.
+
+Un apunte sobre el script: usa `service_role`, o sea que se salta la RLS. Es la
+excepción y por eso vive en la consola y no en la aplicación — lo corre un admin
+desde su máquina, una vez, con el acervo delante. La aplicación sigue subiendo
+archivo por archivo con la sesión de quien sube, que es donde la RLS tiene que
+decidir. Nada de esto se despliega a Vercel.
+
+---
+
 ## Comandos
 
 ```bash
 npm run dev               # desarrollo local
 npm run build             # build de producción
 npm run lint              # linter
-npm run test              # 97 tests (vitest)
+npm run test              # 120 tests (vitest)
 npm run check:migrations  # detecta números de migración duplicados
+
+npm run cargar:acervo -- <carpeta> --dry-run   # carga masiva (ver más abajo)
 ```
+
+Ojo con el `--` de `cargar:acervo`: sin él, npm se queda los argumentos en vez
+de pasárselos al script. También se puede llamar directo:
+`node scripts/cargar-documentos.mjs <carpeta> --dry-run`.
 
 Los cuatro que corre el CI, en este orden: `check:migrations` → `lint` →
 `test` → `build`. Correrlos en local antes de pedir un commit ahorra el viaje
@@ -194,10 +293,12 @@ supabase/migrations/             el esquema, en orden
    solo ahí. Ningún componente escribe el nombre a mano.
 2. **La paleta**, si la fundación tiene manual de marca. Vive completa en
    `app/globals.css`; ningún componente escribe un color a mano.
-3. **Revisar las 9 colecciones y las 26 etiquetas** de `006_semilla.sql` con
-   quien conozca el acervo. Salen del marco legal y curricular colombiano
-   (Ley 70 de 1993, Decreto 1122 de 1998, Ley 1381 de 2010), pero el archivo
-   real de cada fundación tiene sus propios énfasis.
+3. **Revisar las 26 etiquetas** de `006_semilla.sql` con quien conozca el
+   acervo. Salen del marco legal y curricular colombiano (Ley 70 de 1993,
+   Decreto 1122 de 1998, Ley 1381 de 2010), pero el archivo real de cada
+   fundación tiene sus propios énfasis. Las colecciones ya se revisaron: las
+   nueve de `007_colecciones_de_la_fundacion.sql` son las carpetas reales de la
+   fundación, y las del vocabulario inicial quedaron desactivadas.
 4. **Decidir la política de retención** de `eventos_documento`: hoy crece sin
    límite. La vista de estadísticas solo mira 90 días, así que un borrado
    periódico de lo más viejo no le quita nada a nadie.
