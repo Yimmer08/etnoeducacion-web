@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { FUNDACION } from "@/lib/fundacion/config";
 import {
@@ -20,7 +21,37 @@ export default async function Portada() {
 
   return (
     <>
-      <section className="border-b border-borde bg-anil text-crema">
+      {/* ── Portada ────────────────────────────────────────────────────────────
+          El fondo es una imagen, pero `bg-anil` se queda debajo a propósito:
+          es el color de la marca y lo que se ve mientras la imagen carga —o si
+          falta—, así que el texto crema nunca queda sobre blanco.
+
+          `isolate` crea el contexto de apilamiento para que los `-z-10` de la
+          imagen y el velo se queden DENTRO de esta sección y no se metan
+          debajo de la barra de navegación. */}
+      <section className="relative isolate overflow-hidden border-b border-borde bg-anil text-crema">
+        <Image
+          src="/portada-africa.jpg"
+          // Decorativa: el título dice lo mismo y mejor. Un alt describiendo el
+          // mapa haría que un lector de pantalla lo leyera antes del encabezado,
+          // que es lo que la persona vino a escuchar.
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          // El punto de interés es el mapa, a la derecha. En pantalla angosta se
+          // centra, que es donde se ve algo del continente sin recortarlo todo.
+          className="-z-10 object-cover object-center sm:object-right"
+        />
+
+        {/* Velo. El texto vive en la mitad izquierda: ahí el añil va casi opaco
+            y se abre hacia la derecha para dejar ver el mapa. En pantalla
+            angosta el texto ocupa todo el ancho, así que el velo es parejo. */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-10 bg-anil/65 sm:bg-transparent sm:bg-gradient-to-r sm:from-anil sm:from-15% sm:via-anil/85 sm:to-anil/35"
+        />
+
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
           <p className="text-sm uppercase tracking-widest text-ocre-lt">{FUNDACION.nombre}</p>
           <h1 className="mt-3 max-w-3xl font-display text-4xl leading-tight sm:text-5xl">
