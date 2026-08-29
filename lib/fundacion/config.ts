@@ -5,20 +5,16 @@
 // acá y en ningún otro archivo. Es a propósito: cuando el nombre queda repartido
 // entre el layout, el SEO y media docena de componentes, renombrar algo se
 // convierte en un grep completo y siempre queda uno sin cambiar.
-//
-// ⚠️ PENDIENTE: reemplazar NOMBRE, NOMBRE_CORTO y CONTACTO con los datos
-// reales de la fundación. Son los únicos valores de todo el proyecto que están
-// puestos como marcador de posición.
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const FUNDACION = {
-  nombre: "Fundación Afrodescendiente",
-  nombreCorto: "La Fundación",
+  nombre: "Fundación Luker",
+  nombreCorto: "Fundación Luker",
   lema: "Repositorio de Etnoeducación Afrocolombiana",
   descripcion:
     "Archivo abierto de materiales para la enseñanza de la historia, las " +
     "lenguas y los saberes del pueblo negro, afrocolombiano, raizal y palenquero.",
-  correo: "contacto@example.org",
+  correo: "CAMBIAME@fundacionluker.org",
   ciudad: "Colombia",
 } as const;
 
