@@ -25,6 +25,12 @@
   --anil-lt:      #2C5C82;
   --ocre-lt:      #D6A03F;
 
+  /* La arena del fondo de las colecciones, tomada del borde de
+     public/fondo-colecciones.jpeg por la misma razón que --anil-portada: que no
+     se vea dónde termina la imagen. Es el reverso claro del hero — allá el
+     texto es crema sobre oscuro, acá es carbón sobre claro. */
+  --arena:        #F3D3A2;
+
   /* El añil del fondo de la portada. NO es el añil de la marca: está tomado del
      borde de public/portada-africa.jpeg para que, cuando la imagen se muestre
      entera y no llene la franja, el sobrante no se note como una costura. Si se
@@ -40,6 +46,7 @@
   --color-anil:         var(--anil);
   --color-anil-lt:      var(--anil-lt);
   --color-anil-portada: var(--anil-portada);
+  --color-arena:        var(--arena);
   --color-ocre:         var(--ocre);
   --color-ocre-lt:      var(--ocre-lt);
   --color-tierra:       var(--tierra);
