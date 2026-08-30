@@ -174,7 +174,26 @@ export default async function FichaDocumento({
           <section>
             <h2 className="font-display text-xl">Cómo citar</h2>
             <div className="mt-2 flex items-start gap-3 rounded-lg border border-borde bg-white p-4">
-              <p id="texto-cita" className="flex-1 text-sm leading-relaxed">{cita}</p>
+              {/* `min-w-0` y `break-words` no son decoración: la cita termina en
+                  la URL del documento, que es una palabra sin espacios. Un
+                  elemento flex no se encoge por debajo de su contenido mínimo
+                  salvo que se le diga, así que sin esto la fila entera reclama
+                  el ancho de esa URL —422 px medidos, más en producción, donde
+                  el dominio es más largo—, la columna de la rejilla crece con
+                  ella y la página se pasa del ancho de la pantalla. En un
+                  teléfono eso no se ve como un renglón que sobresale: el
+                  navegador ensancha el área de dibujo y aleja el zoom de TODA
+                  la ficha, que era el informe de «no deja ver el contenido». */}
+              {/* Y es `wrap-anywhere`, no `break-words`: el segundo parte la
+                  palabra al dibujarla, pero NO reduce el ancho mínimo que el
+                  elemento declara, así que la columna crecía igual. Medido: con
+                  `break-words` el mínimo seguía en 422 px. */}
+              <p
+                id="texto-cita"
+                className="min-w-0 flex-1 wrap-anywhere text-sm leading-relaxed"
+              >
+                {cita}
+              </p>
               <BotonCopiarCita cita={cita} />
             </div>
           </section>

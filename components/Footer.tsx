@@ -16,6 +16,10 @@ export default function Footer() {
             <li><Link href="/documentos" className="hover:text-anil">Buscar documentos</Link></li>
             <li><Link href="/colecciones" className="hover:text-anil">Colecciones</Link></li>
             <li><Link href="/acerca" className="hover:text-anil">Acerca del repositorio</Link></li>
+            {/* En móvil este es el único acceso al panel: la barra no tiene sitio
+                para el botón (ver components/Navbar.tsx). /acceso redirige a
+                /panel si ya hay sesión, así que sirve para entrar y para volver. */}
+            <li><Link href="/acceso" className="hover:text-anil">Acceso del equipo</Link></li>
           </ul>
         </nav>
 
