@@ -293,18 +293,26 @@ La franja añil de la portada lleva de fondo `public/portada-africa.jpeg`.
 Cambiar la imagen es reemplazar ese archivo: no hay ninguna ruta escrita en
 otro lado.
 
-Dos cosas que conviene respetar al elegir el reemplazo:
+De tablet para arriba la imagen se muestra ENTERA, apoyada a la derecha, y el
+texto va sobre el espacio que queda a la izquierda. No se recorta a propósito:
+la franja es mucho más ancha que alta, y recortar para llenarla se comía más de
+la mitad del continente. En pantalla angosta sí se recorta, porque ahí la franja
+es casi cuadrada y mostrarla entera dejaría el mapa como una estampilla.
 
-- **Oscura y con el motivo hacia la derecha.** El texto va sobre la mitad
-  izquierda, que un velo de añil cubre casi por completo; el degradado se abre
-  hacia la derecha, y ahí es donde la imagen se ve. Un fondo claro no rompe
-  nada —el velo lo sostiene— pero desaprovecha la mitad que sí se ve.
+Tres cosas al elegir el reemplazo:
+
+- **Oscura y con el motivo hacia la derecha**, que es donde queda a la vista.
+  Una imagen clara no rompe nada —hay un velo que sostiene el texto— pero
+  conviene medir el contraste antes de darla por buena.
+- **Volver a muestrear `--anil-portada`** en `app/globals.css`. Ese color es el
+  del BORDE de la imagen, y existe para que el espacio que ella no llena no se
+  note como una costura. Con otra imagen, otro color.
 - **JPG antes que PNG.** Es una fotografía con textura: en PNG pesa varias
   veces más sin verse mejor. Next la vuelve a comprimir y sirve AVIF o WebP
   según el navegador, pero parte de lo que se le entregue.
 
-Si el archivo falta, la portada se queda en añil plano —el color de la marca— y
-no se ve ningún hueco ni ícono de imagen rota.
+Si el archivo falta, la portada se queda en color plano y no se ve ningún hueco
+ni ícono de imagen rota.
 
 ---
 
