@@ -14,14 +14,29 @@ export default function Acerca() {
       <div className="mt-6 space-y-8 leading-relaxed">
         <section>
           <p>
-            Este es un archivo digital abierto. Reúne material para la
-            enseñanza de la historia, las lenguas y los saberes del pueblo negro,
-            afrocolombiano, raizal y palenquero, y lo pone a disposición de docentes,
-            estudiantes, consejos comunitarios y de cualquiera que lo necesite.
+            Este archivo digital, creado por Maira Alejandra Torres, reúne materiales
+            pedagógicos, culturales y educativos que pueden ser utilizados por docentes
+            para fortalecer la enseñanza desde un enfoque etnoeducativo. Incluye recursos
+            sobre historia, identidad, memoria, lenguas, tradiciones y saberes ancestrales
+            de los pueblos negro, afrocolombiano, raizal y palenquero.
+          </p>
+          <p className="mt-3">
+            Algunos materiales son de autoría propia y otros corresponden a fuentes y
+            autores externos, debidamente reconocidos. Los materiales que no son de
+            autoría de Maira Alejandra Torres se comparten exclusivamente con fines
+            educativos y académicos, respetando los derechos de autor y las condiciones
+            de uso de cada obra.
           </p>
           <p className="mt-3">
             La consulta es abierta: no hace falta cuenta ni registro para buscar, leer o
             descargar.
+          </p>
+          {/* La frase de cierre va en la serif y un punto más grande: es un lema,
+              no una aclaración más de la lista, y leída al mismo tamaño que el
+              resto se perdía entre los párrafos. */}
+          <p className="mt-6 font-display text-lg leading-relaxed">
+            Un espacio para enseñar, aprender, reconocer y valorar nuestra diversidad
+            cultural.
           </p>
         </section>
 
