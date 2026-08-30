@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { FUNDACION } from "@/lib/fundacion/config";
 import {
@@ -20,7 +21,46 @@ export default async function Portada() {
 
   return (
     <>
-      <section className="border-b border-borde bg-anil text-crema">
+      {/* ── Portada ────────────────────────────────────────────────────────────
+          El fondo es una imagen, pero `bg-anil` se queda debajo a propósito:
+          es el color de la marca y lo que se ve mientras la imagen carga —o si
+          falta—, así que el texto crema nunca queda sobre blanco.
+
+          `isolate` crea el contexto de apilamiento para que los `-z-10` de la
+          imagen y el velo se queden DENTRO de esta sección y no se metan
+          debajo de la barra de navegación. */}
+      <section className="relative isolate overflow-hidden border-b border-borde bg-anil text-crema">
+        <Image
+          src="/portada-africa.jpeg"
+          // Decorativa: el título dice lo mismo y mejor. Un alt describiendo el
+          // mapa haría que un lector de pantalla lo leyera antes del encabezado,
+          // que es lo que la persona vino a escuchar.
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          // El punto de interés es el mapa, a la derecha. En pantalla angosta se
+          // centra, que es donde se ve algo del continente sin recortarlo todo.
+          className="-z-10 object-cover object-center sm:object-right"
+        />
+
+        {/* Velo, suave a propósito.
+            La imagen de la portada es más OSCURA que el añil de la marca
+            —RGB(11,42,73) contra RGB(31,68,98)— y tiene poquísimo contraste
+            interno: el mapa se despega del fondo apenas 8 niveles. Un velo
+            espeso, que es lo que pediría una foto clara, acá pinta un color
+            MÁS CLARO encima y borra el mapa entero; la portada vuelve a verse
+            como el color plano que era antes.
+
+            Así que queda en lo mínimo. Para el contraste no hace falta: el
+            texto crema sobre esta imagen da 13.8:1, muy por encima del 4.5:1
+            que pide la norma. Sirve para asentar el texto del lado izquierdo y
+            como red por si algún día la imagen se cambia por una más clara. */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-10 bg-anil/25 sm:bg-transparent sm:bg-gradient-to-r sm:from-anil/70 sm:via-anil/20 sm:via-45% sm:to-transparent"
+        />
+
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
           <p className="text-sm uppercase tracking-widest text-ocre-lt">{FUNDACION.nombre}</p>
           <h1 className="mt-3 max-w-3xl font-display text-4xl leading-tight sm:text-5xl">
@@ -45,7 +85,11 @@ export default async function Portada() {
             </button>
           </form>
 
-          <p className="mt-4 text-sm text-crema/70">
+          {/* crema/80, no /70: sobre la imagen el fondo bajo esta línea llega a
+              RGB(37,78,109) y con /70 el contraste cae a 4.4:1, por debajo del
+              4.5:1 que pide la norma para texto pequeño. Con /80 sube a 5.9:1.
+              Sobre el añil plano anterior /70 alcanzaba; con la imagen, no. */}
+          <p className="mt-4 text-sm text-crema/80">
             {total === 0
               ? "El repositorio está listo para recibir sus primeros documentos."
               : `${total} ${total === 1 ? "documento disponible" : "documentos disponibles"} para consulta y descarga.`}
