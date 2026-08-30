@@ -33,7 +33,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Saltar al contenido
         </a>
         <Navbar />
-        <main id="contenido" className="flex-1">
+        {/* `flex flex-col` para que una página pueda estirarse hasta el pie con
+            `flex-1`. Sin eso, un `min-h-full` no resuelve —un porcentaje
+            necesita un padre de altura definida, y la de `main` es automática—
+            y una página corta con fondo propio deja una franja del color del
+            layout entre su final y el pie. */}
+        <main id="contenido" className="flex flex-1 flex-col">
           {children}
         </main>
         <Footer />

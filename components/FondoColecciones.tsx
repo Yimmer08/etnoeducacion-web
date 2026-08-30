@@ -21,21 +21,36 @@ import Image from "next/image";
  */
 export default function FondoColecciones() {
   return (
-    <Image
-      src="/fondo-colecciones.jpeg"
-      // Decorativa: no dice nada que el encabezado de la sección no diga.
-      alt=""
-      fill
-      sizes="100vw"
+    <>
+      <Image
+        src="/fondo-colecciones.jpeg"
+        // Decorativa: no dice nada que el encabezado de la sección no diga.
+        alt=""
+        fill
+        sizes="100vw"
       // `contain` de tablet para arriba, por lo mismo que en la portada: estas
       // franjas son mucho más anchas que altas y recortar para llenarlas
       // agranda la imagen hasta comerse medio continente. Entera, apoyada a la
       // derecha, funciona como marca de agua y deja el flanco izquierdo limpio
       // para el texto.
       //
-      // En pantalla angosta sigue `cover`: ahí la columna es estrecha y alta, y
-      // mostrarla entera dejaría el mapa como una franjita perdida en el medio.
-      className="-z-10 object-cover object-right sm:object-contain"
-    />
+        // En pantalla angosta sigue `cover`: ahí la columna es estrecha y alta,
+        // y mostrarla entera dejaría el mapa como una franjita perdida en el
+        // medio.
+        className="-z-10 object-cover object-right sm:object-contain"
+      />
+
+      {/* Velo, SOLO en móvil.
+          Ahí el texto ocupa todo el ancho y no se lo puede correr al flanco
+          limpio: en la ficha de una colección la cabecera cae justo sobre la
+          parte oscura del mapa y `carbon-suave` baja a 3.9:1, por debajo del
+          4.5:1 de la norma. Con el velo sube a 4.8:1.
+
+          De `sm` para arriba no va: la imagen se muestra entera y apoyada a la
+          derecha, el texto queda sobre la arena plana, y ahí `carbon-suave` da
+          5.3:1 por sí solo. Poner velo también arriba solo serviría para
+          desteñir el mapa sin ganar nada. */}
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-arena/60 sm:hidden" />
+    </>
   );
 }

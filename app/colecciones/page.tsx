@@ -12,10 +12,11 @@ export default async function Colecciones() {
   const [colecciones, conteos] = await Promise.all([listarColecciones(), conteoPorColeccion()]);
 
   return (
-    // `min-h-full` para que la arena llegue hasta abajo aunque haya pocas
-    // colecciones: sin eso, una lista corta deja media pantalla en el crema del
-    // layout y se ve el corte.
-    <div className="relative isolate min-h-full bg-arena">
+    // `flex-1` para que la arena llegue hasta el pie aunque haya pocas
+    // colecciones: `main` es una columna flex (ver app/layout.tsx) y esto la
+    // estira. Con una lista corta, sin eso, queda una franja de crema entre el
+    // final del contenido y el pie.
+    <div className="relative isolate flex-1 overflow-hidden bg-arena">
       <FondoColecciones />
 
       <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
