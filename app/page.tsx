@@ -29,7 +29,7 @@ export default async function Portada() {
           `isolate` crea el contexto de apilamiento para que los `-z-10` de la
           imagen y el velo se queden DENTRO de esta sección y no se metan
           debajo de la barra de navegación. */}
-      <section className="relative isolate overflow-hidden border-b border-borde bg-anil text-crema">
+      <section className="relative isolate overflow-hidden border-b border-borde bg-anil-portada text-crema">
         <Image
           src="/portada-africa.jpeg"
           // Decorativa: el título dice lo mismo y mejor. Un alt describiendo el
@@ -39,9 +39,17 @@ export default async function Portada() {
           fill
           priority
           sizes="100vw"
-          // El punto de interés es el mapa, a la derecha. En pantalla angosta se
-          // centra, que es donde se ve algo del continente sin recortarlo todo.
-          className="-z-10 object-cover object-center sm:object-right"
+          // `contain` de tablet para arriba: la franja es mucho más ancha que
+          // alta y la imagen es 3:2, así que `cover` la agranda hasta cubrir el
+          // ancho y se come más de la mitad del continente. Con `contain` entra
+          // completa, apoyada a la derecha, y lo que sobra a la izquierda queda
+          // del color de sus propios bordes (--anil-portada): no se ve dónde
+          // termina la imagen y dónde empieza el fondo.
+          //
+          // En pantalla angosta sigue `cover`: ahí la franja es casi cuadrada,
+          // recorta poco, y `contain` dejaría el mapa como una estampilla en
+          // medio de una franja vacía.
+          className="-z-10 object-cover object-center sm:object-contain sm:object-right"
         />
 
         {/* Velo, suave a propósito.
@@ -58,7 +66,7 @@ export default async function Portada() {
             como red por si algún día la imagen se cambia por una más clara. */}
         <div
           aria-hidden="true"
-          className="absolute inset-0 -z-10 bg-anil/25 sm:bg-transparent sm:bg-gradient-to-r sm:from-anil/70 sm:via-anil/20 sm:via-45% sm:to-transparent"
+          className="absolute inset-0 -z-10 bg-anil-portada/40 sm:bg-transparent sm:bg-gradient-to-r sm:from-anil-portada/80 sm:via-anil-portada/30 sm:via-40% sm:to-transparent"
         />
 
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">

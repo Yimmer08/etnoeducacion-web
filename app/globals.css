@@ -24,6 +24,12 @@
   --carbon-suave: #57534E;
   --anil-lt:      #2C5C82;
   --ocre-lt:      #D6A03F;
+
+  /* El añil del fondo de la portada. NO es el añil de la marca: está tomado del
+     borde de public/portada-africa.jpeg para que, cuando la imagen se muestre
+     entera y no llene la franja, el sobrante no se note como una costura. Si se
+     reemplaza la imagen, este color se vuelve a muestrear de sus bordes. */
+  --anil-portada: #062340;
 }
 
 @theme inline {
@@ -33,6 +39,7 @@
   --color-carbon-suave: var(--carbon-suave);
   --color-anil:         var(--anil);
   --color-anil-lt:      var(--anil-lt);
+  --color-anil-portada: var(--anil-portada);
   --color-ocre:         var(--ocre);
   --color-ocre-lt:      var(--ocre-lt);
   --color-tierra:       var(--tierra);
