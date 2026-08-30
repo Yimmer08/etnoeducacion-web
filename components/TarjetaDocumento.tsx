@@ -2,26 +2,11 @@ import Link from "next/link";
 import type { DocumentoTarjeta } from "@/lib/documentos/consultas";
 import { formatearAutores } from "@/lib/documentos/citacion";
 import { formatearBytes } from "@/lib/documentos/archivos";
+import { portadaTipografica } from "@/lib/documentos/portadas";
 import { InsigniaLicencia, InsigniaTipo } from "./Insignias";
 
-/**
- * Portada tipográfica: la inicial del título sobre un color derivado del
- * propio título.
- *
- * Se hace así, y no con miniaturas generadas, porque una miniatura obliga a un
- * segundo bucket público (el de documentos es privado, ver 005_storage.sql) y
- * ese bucket filtraría las portadas de los borradores. Una letra grande cuesta
- * cero y no expone nada.
- */
-function portadaDe(titulo: string): { fondo: string; letra: string } {
-  const fondos = ["bg-anil", "bg-tierra", "bg-palma", "bg-ocre"];
-  let suma = 0;
-  for (const c of titulo) suma = (suma + c.codePointAt(0)!) % 997;
-  return { fondo: fondos[suma % fondos.length], letra: titulo.trim().charAt(0).toUpperCase() || "?" };
-}
-
 export default function TarjetaDocumento({ doc }: { doc: DocumentoTarjeta }) {
-  const portada = portadaDe(doc.titulo);
+  const portada = portadaTipografica(doc.titulo);
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-lg border border-borde bg-white transition-shadow hover:shadow-md">

@@ -284,6 +284,7 @@ lib/
 public/
   portada-africa.jpeg             fondo del hero (ver abajo)
   fondo-colecciones.jpeg          fondo de las colecciones (ver abajo)
+  colecciones/<slug>.jpg          la ilustración de cada colección
 
 supabase/migrations/             el esquema, en orden
 ```
@@ -314,6 +315,33 @@ claro, y el texto secundario (`carbon-suave`) sobre la parte más oscura del
 mapa da 3.8:1, por debajo del 4.5:1 que pide la norma. Sobre la arena plana da
 5.3:1. Manteniendo el mapa de un lado y el texto del otro, el problema no
 existe — pero si algún día se centra la imagen, hay que volver a medir.
+
+### Las ilustraciones de las colecciones
+
+Cada tarjeta de colección lleva arriba su ilustración y el texto debajo, sobre
+blanco — el mismo patrón que la tarjeta de un documento. Va así, y no con la
+imagen de fondo detrás del texto, porque el título y la descripción se leen
+sobre blanco sin depender de qué haya quedado abajo.
+
+Para agregar la ilustración de una colección hacen falta dos cosas:
+
+1. El archivo en `public/colecciones/<slug>.jpg`, en 3:2 y unos 800 px de ancho
+   (las tarjetas miden entre 370 y 560; 800 alcanza para pantallas de alta
+   densidad y evita mandar un archivo de 300 KB para una tarjeta).
+2. Su renglón en `IMAGENES_COLECCION`, en `lib/documentos/portadas.ts`.
+
+Son dos pasos y no uno —la ruta podría armarse sola con el slug— porque así una
+colección sin ilustración devuelve `null` y cae a la portada tipográfica, en vez
+de pedir un archivo que no existe y dejar el hueco de una imagen rota.
+
+**Si la ilustración trae texto dibujado, hay que recortarlo.** Un texto dentro
+de un mapa de bits no lo encuentra el buscador, no lo lee un lector de pantalla,
+se ve borroso al escalar y queda mintiendo el día que la colección se renombre.
+El texto de la tarjeta ya dice lo mismo, y bien.
+
+Hoy tienen ilustración seis de las nueve. Las otras tres —Cartilla La Aventura
+Ancestral, Poemas y San Basilio de Palenque— muestran su inicial sobre un color
+de la paleta, que sale del propio nombre y por eso no cambia entre recargas.
 
 ### Cambiar el fondo de la portada
 

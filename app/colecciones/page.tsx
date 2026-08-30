@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { conteoPorColeccion, listarColecciones } from "@/lib/documentos/consultas";
 import FondoColecciones from "@/components/FondoColecciones";
+import PortadaColeccion from "@/components/PortadaColeccion";
 
 export const metadata: Metadata = {
   title: "Colecciones",
@@ -33,17 +34,21 @@ export default async function Colecciones() {
               <li key={c.id}>
                 <Link
                   href={`/colecciones/${c.slug}`}
-                  className="flex h-full flex-col rounded-lg border border-borde bg-white p-6 transition-colors hover:border-anil"
+                  className="group flex h-full flex-col overflow-hidden rounded-lg border border-borde bg-white transition-colors hover:border-anil"
                 >
-                  <h2 className="font-display text-xl leading-snug">{c.nombre}</h2>
-                  {c.descripcion && (
-                    <p className="mt-2 flex-1 text-sm leading-relaxed text-carbon-suave">
-                      {c.descripcion}
-                    </p>
-                  )}
-                  <span className="mt-4 text-xs uppercase tracking-wide text-carbon-suave">
-                    {n} {n === 1 ? "documento" : "documentos"}
-                  </span>
+                  <PortadaColeccion slug={c.slug} nombre={c.nombre} />
+
+                  <div className="flex flex-1 flex-col p-6">
+                    <h2 className="font-display text-xl leading-snug">{c.nombre}</h2>
+                    {c.descripcion && (
+                      <p className="mt-2 flex-1 text-sm leading-relaxed text-carbon-suave">
+                        {c.descripcion}
+                      </p>
+                    )}
+                    <span className="mt-4 text-xs uppercase tracking-wide text-carbon-suave">
+                      {n} {n === 1 ? "documento" : "documentos"}
+                    </span>
+                  </div>
                 </Link>
               </li>
             );
