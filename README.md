@@ -282,10 +282,38 @@ lib/
   analitica/ip.ts                hash de IP                                 ← testeado
 
 public/
-  portada-africa.jpeg             fondo de la portada (ver abajo)
+  portada-africa.jpeg             fondo del hero (ver abajo)
+  fondo-colecciones.jpeg          fondo de las colecciones (ver abajo)
 
 supabase/migrations/             el esquema, en orden
 ```
+
+### Los dos fondos
+
+El sitio tiene dos imágenes de fondo, y son la misma idea en dos tonos: el mapa
+del continente, oscuro en el hero y claro detrás de las colecciones.
+
+| Dónde | Archivo | Color de respaldo |
+| --- | --- | --- |
+| El hero de la portada | `public/portada-africa.jpeg` | `--anil-portada` |
+| Colecciones, en la portada y en `/colecciones` | `public/fondo-colecciones.jpeg` | `--arena` |
+
+Las dos se comportan igual: de tablet para arriba se muestran **enteras**,
+apoyadas a la derecha, y el texto va sobre el espacio de la izquierda. No se
+recortan a propósito —las franjas son mucho más anchas que altas y recortar
+para llenarlas se come medio continente—. En pantalla angosta sí se recortan,
+porque ahí la franja es casi cuadrada y mostrarlas enteras dejaría el mapa como
+una estampilla.
+
+El fondo de colecciones lo dibuja `components/FondoColecciones.tsx`, un solo
+componente usado en los dos lugares: son la misma sección vista de dos maneras
+y tienen que verse igual.
+
+**La composición no es capricho.** En colecciones el texto es oscuro sobre
+claro, y el texto secundario (`carbon-suave`) sobre la parte más oscura del
+mapa da 3.8:1, por debajo del 4.5:1 que pide la norma. Sobre la arena plana da
+5.3:1. Manteniendo el mapa de un lado y el texto del otro, el problema no
+existe — pero si algún día se centra la imagen, hay que volver a medir.
 
 ### Cambiar el fondo de la portada
 

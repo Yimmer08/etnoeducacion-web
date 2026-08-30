@@ -8,6 +8,7 @@ import {
   totalPublicados,
 } from "@/lib/documentos/consultas";
 import TarjetaDocumento from "@/components/TarjetaDocumento";
+import FondoColecciones from "@/components/FondoColecciones";
 
 export default async function Portada() {
   // Las cuatro consultas son independientes: en serie serían cuatro viajes a
@@ -105,33 +106,45 @@ export default async function Portada() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-        <div className="flex items-end justify-between gap-4">
-          <h2 className="font-display text-2xl">Colecciones</h2>
-          <Link href="/colecciones" className="text-sm text-anil hover:underline">
-            Ver todas
-          </Link>
-        </div>
+      {/* ── Colecciones ────────────────────────────────────────────────────────
+          La sección se parte en dos: la de afuera lleva el fondo y va de borde
+          a borde, y la de adentro centra el contenido. Antes era una sola con
+          `mx-auto max-w-6xl`, y un fondo ahí se habría cortado a los lados
+          junto con el contenido.
 
-        <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {colecciones.slice(0, 6).map((c) => (
-            <li key={c.id}>
-              <Link
-                href={`/documentos?coleccion=${c.slug}`}
-                className="flex h-full flex-col rounded-lg border border-borde bg-white p-5 transition-colors hover:border-anil"
-              >
-                <h3 className="font-display text-lg leading-snug">{c.nombre}</h3>
-                {c.descripcion && (
-                  <p className="recorte-3 mt-2 text-sm text-carbon-suave">{c.descripcion}</p>
-                )}
-                <span className="mt-4 text-xs uppercase tracking-wide text-carbon-suave">
-                  {conteos[c.id] ?? 0}{" "}
-                  {(conteos[c.id] ?? 0) === 1 ? "documento" : "documentos"}
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+          Mismo fondo que /colecciones, por el mismo componente: las dos vistas
+          de las colecciones tienen que leerse como una sola cosa. */}
+      <section className="relative isolate overflow-hidden border-y border-borde bg-arena">
+        <FondoColecciones />
+
+        <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+          <div className="flex items-end justify-between gap-4">
+            <h2 className="font-display text-2xl">Colecciones</h2>
+            <Link href="/colecciones" className="text-sm text-anil hover:underline">
+              Ver todas
+            </Link>
+          </div>
+
+          <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {colecciones.slice(0, 6).map((c) => (
+              <li key={c.id}>
+                <Link
+                  href={`/documentos?coleccion=${c.slug}`}
+                  className="flex h-full flex-col rounded-lg border border-borde bg-white p-5 transition-colors hover:border-anil"
+                >
+                  <h3 className="font-display text-lg leading-snug">{c.nombre}</h3>
+                  {c.descripcion && (
+                    <p className="recorte-3 mt-2 text-sm text-carbon-suave">{c.descripcion}</p>
+                  )}
+                  <span className="mt-4 text-xs uppercase tracking-wide text-carbon-suave">
+                    {conteos[c.id] ?? 0}{" "}
+                    {(conteos[c.id] ?? 0) === 1 ? "documento" : "documentos"}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
 
       {recientes.length > 0 && (
