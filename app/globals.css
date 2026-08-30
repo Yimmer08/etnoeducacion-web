@@ -62,6 +62,16 @@ body {
   font-family: var(--font-sans), system-ui, sans-serif;
 }
 
+/* `main` es una columna flex (ver app/layout.tsx) para que una página con fondo
+   propio pueda estirarse hasta el pie con `flex-1`. El efecto colateral es que
+   sus hijos pasan a ser elementos flex y se encogen al ancho de su contenido:
+   una página con `mx-auto max-w-6xl` deja de ocupar el ancho disponible, porque
+   los márgenes automáticos anulan el estirado. Esto les devuelve el ancho del
+   flujo normal — el `max-w-*` sigue mandando, y `mx-auto` sigue centrando. */
+main > * {
+  width: 100%;
+}
+
 h1, h2, h3 {
   font-family: var(--font-display), Georgia, serif;
 }
