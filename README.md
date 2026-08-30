@@ -282,14 +282,14 @@ lib/
   analitica/ip.ts                hash de IP                                 ← testeado
 
 public/
-  portada-africa.jpg             fondo de la portada (ver abajo)
+  portada-africa.jpeg             fondo de la portada (ver abajo)
 
 supabase/migrations/             el esquema, en orden
 ```
 
 ### Cambiar el fondo de la portada
 
-La franja añil de la portada lleva de fondo `public/portada-africa.jpg`.
+La franja añil de la portada lleva de fondo `public/portada-africa.jpeg`.
 Cambiar la imagen es reemplazar ese archivo: no hay ninguna ruta escrita en
 otro lado.
 
