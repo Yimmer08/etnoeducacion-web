@@ -72,8 +72,12 @@ export default async function Portada() {
         />
 
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
-          <p className="text-sm uppercase tracking-widest text-ocre-lt">{FUNDACION.nombre}</p>
-          <h1 className="mt-3 max-w-3xl font-display text-4xl leading-tight sm:text-5xl">
+          {/* Acá iba el nombre de la fundación, encima del título. Ya no: el
+              repositorio se llama «Repositorio Etnoeducativo» y ponerlo sobre
+              «Repositorio de Etnoeducación Afrocolombiana» es decir dos veces
+              lo mismo. El nombre sigue en la barra, en el pie y en el título
+              de la pestaña. */}
+          <h1 className="max-w-3xl font-display text-4xl leading-tight sm:text-5xl">
             {FUNDACION.lema}
           </h1>
           <p className="mt-5 max-w-2xl text-lg text-crema/85">{FUNDACION.descripcion}</p>

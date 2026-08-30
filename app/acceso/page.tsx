@@ -32,7 +32,7 @@ export default async function Acceso({
     <div className="mx-auto flex max-w-md flex-col justify-center px-4 py-16 sm:px-6">
       <h1 className="font-display text-3xl">Entrar</h1>
       <p className="mt-2 text-carbon-suave">
-        El acceso es para el equipo de {FUNDACION.nombreCorto} que sube y revisa documentos.
+        El acceso es para el equipo que sube y revisa documentos.
         Para consultar el repositorio no hace falta cuenta.
       </p>
 

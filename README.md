@@ -374,9 +374,17 @@ ni ícono de imagen rota.
 
 ## Pendiente antes de salir a producción
 
-1. **El nombre real de la fundación.** Está como marcador de posición en
-   `lib/fundacion/config.ts` (`nombre`, `nombreCorto`, `correo`, `ciudad`) — y
-   solo ahí. Ningún componente escribe el nombre a mano.
+1. **El correo de contacto.** Sigue en `CAMBIAME@ejemplo.org`, dentro de
+   `lib/fundacion/config.ts` — y solo ahí, junto con `nombre`, `nombreCorto` y
+   `ciudad`. Ningún componente escribe nada de eso a mano.
+
+   El repositorio se llama por lo que es, «Repositorio Etnoeducativo», y no por
+   la fundación que lo aloja: así no depende de que nadie autorice el uso de su
+   nombre. Si algún día se decide ponerlo, se cambia en ese archivo y aparece en
+   la barra, el pie, el título de la pestaña y los metadatos de Open Graph. Ojo
+   con dos cosas si eso pasa: la portada perdió el antetítulo que llevaba el
+   nombre encima del título, y la barra el subtítulo «Repositorio» debajo —los
+   dos se quitaron porque con el nombre actual repetían la misma palabra.
 2. **La paleta**, si la fundación tiene manual de marca. Vive completa en
    `app/globals.css`; ningún componente escribe un color a mano.
 3. **Revisar las 26 etiquetas** de `006_semilla.sql` con quien conozca el

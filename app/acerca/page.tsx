@@ -14,7 +14,7 @@ export default function Acerca() {
       <div className="mt-6 space-y-8 leading-relaxed">
         <section>
           <p>
-            Este es el archivo digital de {FUNDACION.nombre}. Reúne material para la
+            Este es un archivo digital abierto. Reúne material para la
             enseñanza de la historia, las lenguas y los saberes del pueblo negro,
             afrocolombiano, raizal y palenquero, y lo pone a disposición de docentes,
             estudiantes, consejos comunitarios y de cualquiera que lo necesite.

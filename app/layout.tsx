@@ -8,7 +8,10 @@ import "./globals.css";
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 const serif = Source_Serif_4({ variable: "--font-serif", subsets: ["latin"] });
 
-const TITULO = `${FUNDACION.lema} — ${FUNDACION.nombre}`;
+// Solo el lema: con el nombre detrás quedaría «Repositorio de Etnoeducación
+// Afrocolombiana — Repositorio Etnoeducativo». En las demás páginas el nombre
+// sí aparece, por la plantilla `%s — nombreCorto`.
+const TITULO = FUNDACION.lema;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITIO_URL),
