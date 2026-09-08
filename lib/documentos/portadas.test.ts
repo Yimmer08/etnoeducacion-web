@@ -6,11 +6,29 @@ describe("imagenDeColeccion", () => {
     expect(imagenDeColeccion("diaspora-africana")).toBe("/colecciones/diaspora-africana.jpg");
   });
 
+  it("tiene ilustración para las nueve colecciones activas", () => {
+    // Las nueve de 007_colecciones_de_la_fundacion.sql. Si entra una décima y
+    // llega sin dibujo, este test lo dice acá y no la página con un hueco.
+    const activas = [
+      "cartilla-la-aventura-ancestral",
+      "cartillas-lengua-palenkera",
+      "catedra-estudios-afrocolombianos",
+      "cuentos-afro-del-pacifico-colombiano",
+      "diaspora-africana",
+      "etnoeducacion",
+      "maleta-didactica",
+      "poemas",
+      "san-basilio-de-palenque",
+    ];
+    for (const slug of activas) expect(imagenDeColeccion(slug), slug).not.toBeNull();
+  });
+
   it("devuelve null para una colección sin ilustración", () => {
-    // Estas tres todavía no tienen dibujo y caen a la portada tipográfica.
-    expect(imagenDeColeccion("poemas")).toBeNull();
-    expect(imagenDeColeccion("cartilla-la-aventura-ancestral")).toBeNull();
-    expect(imagenDeColeccion("san-basilio-de-palenque")).toBeNull();
+    // Las que 007 desactivó siguen siendo filas de la tabla y nunca tuvieron
+    // dibujo: si una se reactiva, cae a la portada tipográfica en vez de pedir
+    // un archivo que no existe.
+    expect(imagenDeColeccion("historia-y-memoria")).toBeNull();
+    expect(imagenDeColeccion("normatividad-y-politica-publica")).toBeNull();
   });
 
   it("devuelve null para un slug inventado, sin reventar", () => {

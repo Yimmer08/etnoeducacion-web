@@ -12,24 +12,30 @@
  * Es un mapa explícito y no una ruta armada al vuelo (`/colecciones/${slug}.jpg`)
  * a propósito: así una colección sin ilustración devuelve `null` y cae a la
  * portada tipográfica, en vez de pedir un archivo que no existe y dejar el
- * hueco de una imagen rota. El día que llegue la ilustración que falta, se
- * agrega el archivo y su renglón acá.
+ * hueco de una imagen rota. Hoy las nueve activas tienen la suya; la décima que
+ * entre por el panel cae a la tipográfica hasta que se agregue acá su renglón.
  *
- * Las imágenes vienen con el título y la descripción DIBUJADOS en una franja
- * superior, y esa franja se recorta antes de guardarlas. No es capricho: un
- * texto dentro de un mapa de bits no lo encuentra el buscador, no lo lee un
- * lector de pantalla, se ve borroso al escalar, y queda mintiendo el día que la
- * colección se renombre. El texto de la tarjeta ya dice lo mismo, y bien.
+ * Las imágenes vienen con el título y la descripción DIBUJADOS encima —arriba
+ * en un cartel, abajo en una placa, o al costado en tipografía grande— y ese
+ * texto se recorta antes de guardarlas. No es capricho: un texto dentro de un
+ * mapa de bits no lo encuentra el buscador, no lo lee un lector de pantalla, se
+ * ve borroso al escalar, y queda mintiendo el día que la colección se renombre.
+ * El texto de la tarjeta ya dice lo mismo, y bien.
+ *
+ * Lo que sí se queda es el texto que forma parte del dibujo —el lomo de un
+ * libro, un letrero de madera, la página abierta—: eso es la escena, no el
+ * rótulo de la colección, y quitarlo sería recortar la ilustración.
  */
 export const IMAGENES_COLECCION: Readonly<Record<string, string>> = {
+  "cartilla-la-aventura-ancestral": "/colecciones/cartilla-la-aventura-ancestral.jpg",
   "cartillas-lengua-palenkera": "/colecciones/cartillas-lengua-palenkera.jpg",
   "catedra-estudios-afrocolombianos": "/colecciones/catedra-estudios-afrocolombianos.jpg",
   "cuentos-afro-del-pacifico-colombiano": "/colecciones/cuentos-afro-del-pacifico-colombiano.jpg",
   "diaspora-africana": "/colecciones/diaspora-africana.jpg",
   "etnoeducacion": "/colecciones/etnoeducacion.jpg",
   "maleta-didactica": "/colecciones/maleta-didactica.jpg",
-  // Sin ilustración todavía: cartilla-la-aventura-ancestral, poemas y
-  // san-basilio-de-palenque. Caen a la portada tipográfica.
+  "poemas": "/colecciones/poemas.jpg",
+  "san-basilio-de-palenque": "/colecciones/san-basilio-de-palenque.jpg",
 };
 
 /**
