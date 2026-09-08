@@ -334,14 +334,22 @@ Son dos pasos y no uno —la ruta podría armarse sola con el slug— porque as�
 colección sin ilustración devuelve `null` y cae a la portada tipográfica, en vez
 de pedir un archivo que no existe y dejar el hueco de una imagen rota.
 
-**Si la ilustración trae texto dibujado, hay que recortarlo.** Un texto dentro
-de un mapa de bits no lo encuentra el buscador, no lo lee un lector de pantalla,
-se ve borroso al escalar y queda mintiendo el día que la colección se renombre.
-El texto de la tarjeta ya dice lo mismo, y bien.
+**Si la ilustración trae el título o la descripción dibujados, hay que
+recortarlos.** Un texto dentro de un mapa de bits no lo encuentra el buscador, no
+lo lee un lector de pantalla, se ve borroso al escalar y queda mintiendo el día
+que la colección se renombre. El texto de la tarjeta ya dice lo mismo, y bien.
 
-Hoy tienen ilustración seis de las nueve. Las otras tres —Cartilla La Aventura
-Ancestral, Poemas y San Basilio de Palenque— muestran su inicial sobre un color
-de la paleta, que sale del propio nombre y por eso no cambia entre recargas.
+El rótulo no siempre está arriba: puede venir en un cartel colgado, en una placa
+al pie o al costado en tipografía grande, y a veces la descripción va aparte, en
+su propia ficha. Se recorta lo que haya. Lo que sí se queda es el texto que
+forma parte del dibujo —el lomo de un libro, un letrero de madera, la página
+abierta—: eso es la escena, no el rótulo, y quitarlo sería recortar la
+ilustración.
+
+Hoy las nueve colecciones activas tienen la suya. La décima que entre por el
+panel mostrará su inicial sobre un color de la paleta, que sale del propio
+nombre y por eso no cambia entre recargas, hasta que se le agregue el archivo y
+su renglón.
 
 ### Cambiar el fondo de la portada
 
