@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { conteoPorColeccion, listarColecciones } from "@/lib/documentos/consultas";
 import FondoColecciones from "@/components/FondoColecciones";
+import PortadaColeccion from "@/components/PortadaColeccion";
 
 export const metadata: Metadata = {
   title: "Colecciones",
@@ -12,10 +13,11 @@ export default async function Colecciones() {
   const [colecciones, conteos] = await Promise.all([listarColecciones(), conteoPorColeccion()]);
 
   return (
-    // `min-h-full` para que la arena llegue hasta abajo aunque haya pocas
-    // colecciones: sin eso, una lista corta deja media pantalla en el crema del
-    // layout y se ve el corte.
-    <div className="relative isolate min-h-full bg-arena">
+    // `flex-1` para que la arena llegue hasta el pie aunque haya pocas
+    // colecciones: `main` es una columna flex (ver app/layout.tsx) y esto la
+    // estira. Con una lista corta, sin eso, queda una franja de crema entre el
+    // final del contenido y el pie.
+    <div className="relative isolate flex-1 overflow-hidden bg-arena">
       <FondoColecciones />
 
       <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
@@ -32,17 +34,21 @@ export default async function Colecciones() {
               <li key={c.id}>
                 <Link
                   href={`/colecciones/${c.slug}`}
-                  className="flex h-full flex-col rounded-lg border border-borde bg-white p-6 transition-colors hover:border-anil"
+                  className="group flex h-full flex-col overflow-hidden rounded-lg border border-borde bg-white transition-colors hover:border-anil"
                 >
-                  <h2 className="font-display text-xl leading-snug">{c.nombre}</h2>
-                  {c.descripcion && (
-                    <p className="mt-2 flex-1 text-sm leading-relaxed text-carbon-suave">
-                      {c.descripcion}
-                    </p>
-                  )}
-                  <span className="mt-4 text-xs uppercase tracking-wide text-carbon-suave">
-                    {n} {n === 1 ? "documento" : "documentos"}
-                  </span>
+                  <PortadaColeccion slug={c.slug} nombre={c.nombre} />
+
+                  <div className="flex flex-1 flex-col p-6">
+                    <h2 className="font-display text-xl leading-snug">{c.nombre}</h2>
+                    {c.descripcion && (
+                      <p className="mt-2 flex-1 text-sm leading-relaxed text-carbon-suave">
+                        {c.descripcion}
+                      </p>
+                    )}
+                    <span className="mt-4 text-xs uppercase tracking-wide text-carbon-suave">
+                      {n} {n === 1 ? "documento" : "documentos"}
+                    </span>
+                  </div>
                 </Link>
               </li>
             );

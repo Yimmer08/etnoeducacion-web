@@ -8,13 +8,16 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const FUNDACION = {
-  nombre: "Fundación Luker",
-  nombreCorto: "Fundación Luker",
+  // El repositorio se nombra por lo que ES, no por quién lo aloja: así no
+  // depende de que una fundación autorice el uso de su nombre ni hay que
+  // repasar el sitio entero si mañana cambia de casa.
+  nombre: "Repositorio Etnoeducativo",
+  nombreCorto: "Repositorio Etnoeducativo",
   lema: "Repositorio de Etnoeducación Afrocolombiana",
   descripcion:
     "Archivo abierto de materiales para la enseñanza de la historia, las " +
     "lenguas y los saberes del pueblo negro, afrocolombiano, raizal y palenquero.",
-  correo: "CAMBIAME@fundacionluker.org",
+  correo: "CAMBIAME@ejemplo.org",
   ciudad: "Colombia",
 } as const;
 

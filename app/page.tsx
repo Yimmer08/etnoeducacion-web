@@ -9,6 +9,7 @@ import {
 } from "@/lib/documentos/consultas";
 import TarjetaDocumento from "@/components/TarjetaDocumento";
 import FondoColecciones from "@/components/FondoColecciones";
+import PortadaColeccion from "@/components/PortadaColeccion";
 
 export default async function Portada() {
   // Las cuatro consultas son independientes: en serie serían cuatro viajes a
@@ -71,8 +72,12 @@ export default async function Portada() {
         />
 
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
-          <p className="text-sm uppercase tracking-widest text-ocre-lt">{FUNDACION.nombre}</p>
-          <h1 className="mt-3 max-w-3xl font-display text-4xl leading-tight sm:text-5xl">
+          {/* Acá iba el nombre de la fundación, encima del título. Ya no: el
+              repositorio se llama «Repositorio Etnoeducativo» y ponerlo sobre
+              «Repositorio de Etnoeducación Afrocolombiana» es decir dos veces
+              lo mismo. El nombre sigue en la barra, en el pie y en el título
+              de la pestaña. */}
+          <h1 className="max-w-3xl font-display text-4xl leading-tight sm:text-5xl">
             {FUNDACION.lema}
           </h1>
           <p className="mt-5 max-w-2xl text-lg text-crema/85">{FUNDACION.descripcion}</p>
@@ -130,16 +135,20 @@ export default async function Portada() {
               <li key={c.id}>
                 <Link
                   href={`/documentos?coleccion=${c.slug}`}
-                  className="flex h-full flex-col rounded-lg border border-borde bg-white p-5 transition-colors hover:border-anil"
+                  className="group flex h-full flex-col overflow-hidden rounded-lg border border-borde bg-white transition-colors hover:border-anil"
                 >
-                  <h3 className="font-display text-lg leading-snug">{c.nombre}</h3>
-                  {c.descripcion && (
-                    <p className="recorte-3 mt-2 text-sm text-carbon-suave">{c.descripcion}</p>
-                  )}
-                  <span className="mt-4 text-xs uppercase tracking-wide text-carbon-suave">
-                    {conteos[c.id] ?? 0}{" "}
-                    {(conteos[c.id] ?? 0) === 1 ? "documento" : "documentos"}
-                  </span>
+                  <PortadaColeccion slug={c.slug} nombre={c.nombre} />
+
+                  <div className="flex flex-1 flex-col p-5">
+                    <h3 className="font-display text-lg leading-snug">{c.nombre}</h3>
+                    {c.descripcion && (
+                      <p className="recorte-3 mt-2 text-sm text-carbon-suave">{c.descripcion}</p>
+                    )}
+                    <span className="mt-4 text-xs uppercase tracking-wide text-carbon-suave">
+                      {conteos[c.id] ?? 0}{" "}
+                      {(conteos[c.id] ?? 0) === 1 ? "documento" : "documentos"}
+                    </span>
+                  </div>
                 </Link>
               </li>
             ))}

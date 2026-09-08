@@ -24,9 +24,11 @@ export default async function Navbar() {
           >
             {FUNDACION.nombre.charAt(0)}
           </span>
+          {/* Sin el subtítulo «Repositorio» que había debajo: hacía falta
+              cuando el sitio llevaba el nombre de una fundación y había que
+              decir qué era esto. Ahora el nombre ya lo dice. */}
           <span className="hidden font-display text-base leading-tight sm:block">
             {FUNDACION.nombreCorto}
-            <span className="block text-xs font-sans text-carbon-suave">Repositorio</span>
           </span>
         </Link>
 
